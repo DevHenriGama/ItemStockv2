@@ -1,0 +1,25 @@
+unit uItemStock.Controll.APISource;
+
+interface
+
+uses
+  System.SysUtils, System.Classes,UDWDataModule;
+
+type
+  TDataModule1 = class(TServerMethodDataModule)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModule1: TDataModule1;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

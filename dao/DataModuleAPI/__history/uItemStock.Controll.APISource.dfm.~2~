@@ -1,0 +1,10 @@
+object ApiData: TApiData
+  Height = 381
+  Width = 425
+  object DWServerEvents1: TDWServerEvents
+    IgnoreInvalidParams = False
+    Events = <>
+    Left = 208
+    Top = 192
+  end
+end
