@@ -30,14 +30,14 @@ uses
     end;
     IControllSettings = interface
       ['{0C258709-5843-4BD8-931E-57A9597DA366}']
-      function StartOnSys : Boolean; overload;
-      procedure StartOnSys(_Start : Boolean); overload;
-      function StartMinimized : Boolean;
-      procedure StartMinimize(_Start : Boolean);
-      function PortAPI : String; Overload;
-      procedure PortAPI(_ValuePort : String);Overload;
-      function StartAutoAPI : Boolean; overload;
-      procedure StartAutoAPI(_Start : Boolean);overload;
+    procedure SetPortAPI(Value : String);
+    function GetPortAPI : String;
+    procedure SetStarOnSys(Value : Boolean);
+    function GetStartOnSys : Boolean;
+    procedure SetStartMinimized(Value : Boolean);
+    function GetStartMinimized : Boolean;
+    procedure SetAutoStartAPI(Value : Boolean);
+    function GetAutoStartAPI : Boolean;
     end;
 implementation
 end.

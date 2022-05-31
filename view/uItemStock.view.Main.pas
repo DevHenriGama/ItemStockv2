@@ -92,13 +92,14 @@ begin
  Perform(WM_SYSCOMMAND,SG,0);
 end;
 procedure TfrmMain.pnlSettingsClick(Sender: TObject);
+var SettingView : TfrmSettings;
 begin
 SetIndicator(pnlSettings);
  try
-  frmSettings := TfrmSettings.Create(nil);
-  frmSettings.ShowModal;
+  SettingView := frmSettings.Create(Self);
+  SettingView.Show;
  finally
-  frmSettings.Free;
+  SettingView.Free;
  end;
 end;
 procedure TfrmMain.pnlSettingsMouseEnter(Sender: TObject);

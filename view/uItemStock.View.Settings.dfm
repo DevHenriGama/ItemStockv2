@@ -12,6 +12,8 @@ object frmSettings: TfrmSettings
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlTop: TPanel
     Left = 0
@@ -32,7 +34,6 @@ object frmSettings: TfrmSettings
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 640
     object Image1: TImage
       AlignWithMargins = True
       Left = 463
@@ -73,8 +74,6 @@ object frmSettings: TfrmSettings
     Constraints.MinHeight = 24
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 439
-    ExplicitWidth = 640
   end
   object GroupBox1: TGroupBox
     Left = 0
@@ -84,37 +83,66 @@ object frmSettings: TfrmSettings
     Align = alTop
     Caption = 'Geral'
     TabOrder = 2
+    ExplicitTop = 27
+    object Image3: TImage
+      AlignWithMargins = True
+      Left = 453
+      Top = 20
+      Width = 32
+      Height = 40
+      Align = alRight
+      AutoSize = True
+      Center = True
+      Picture.Data = {
+        0954506E67496D61676589504E470D0A1A0A0000000D49484452000000200000
+        00200806000000737A7AF40000000473424954080808087C0864880000000970
+        4859730000014B0000014B013BC21B460000001974455874536F667477617265
+        007777772E696E6B73636170652E6F72679BEE3C1A000001C14944415478DAED
+        974F2804511CC7DFA39C28DAF2E7C641899428E2E6B65252943D2814B5278E8A
+        837520572E884239D8E2A2C4456EAB14175172E0E64F89E242313ECF8C5A6B66
+        32EBCD6E5BFBEADBFBCDEFF79BDFEF33B3F3DECC4A2144217A14FE8D57D46918
+        C69E5D50A600C015C20EE005ED6B6A5C8D2ADD20EC002E48AAD2D15D4A39C334
+        EA76271C0138B914FB26CE5F86FFF69F00BF20D201F003225D00DF10817402A8
+        5194057003C8C12E8EF3DFE3FF4805C0138A7A69E4329A509D5780548E2C40E6
+        02ACA30D74621DD7A310EAF51BE0593561396EDB0559761D165C815F0043345F
+        B6F688306AB7FC3B6841ED13C406B197FC0038A4418B75A59B4C5D09F12DE2DD
+        563CC6D4AC1B609A06E3140F62EF3AE4B47DBD62A59CC21ED30D10A27894E211
+        EC09879C497222E4F408F321D50A3042F1398AABDF7EDE21274CCE2239C3D8B3
+        BA01D628DE4FF112EC331448883FA01A72EEC859C5EED30DA0BE966B69704D03
+        F530AAE55661C5AE84B93C63C4CAB14F51BE6E00350E5090466F34CA15E667B7
+        1AE7F8DEF1E561AB8FCDD63FD64B6A2754573740C3E37827CD1B9856D45DF250
+        2BE9ADD84097E8C83A6E14E61F10E9B14EE6BE8CB200DA003E015271F6AA56E1
+        DFB50000000049454E44AE426082}
+      OnClick = Image3Click
+      ExplicitLeft = 304
+      ExplicitTop = 6
+      ExplicitHeight = 32
+    end
     object ckStartOnSys: TCheckBox
-      Left = 16
-      Top = 24
+      AlignWithMargins = True
+      Left = 5
+      Top = 20
       Width = 132
-      Height = 17
-      Caption = 'Iniciar com o Systema'
+      Height = 40
+      Align = alLeft
+      Caption = 'Iniciar com o Sistema'
       TabOrder = 0
+      ExplicitLeft = 16
+      ExplicitTop = 24
+      ExplicitHeight = 17
     end
     object ckStartMin: TCheckBox
-      Left = 170
-      Top = 24
+      AlignWithMargins = True
+      Left = 143
+      Top = 20
       Width = 128
-      Height = 17
+      Height = 40
+      Align = alLeft
       Caption = 'Iniciar Minimizado'
       TabOrder = 1
-    end
-    object Button2: TButton
-      Left = 319
-      Top = 20
-      Width = 75
-      Height = 25
-      Caption = 'Editar'
-      TabOrder = 2
-    end
-    object Button3: TButton
-      Left = 400
-      Top = 20
-      Width = 75
-      Height = 25
-      Caption = 'Salvar'
-      TabOrder = 3
+      ExplicitLeft = 170
+      ExplicitTop = 24
+      ExplicitHeight = 17
     end
   end
   object GroupBox2: TGroupBox
@@ -125,9 +153,6 @@ object frmSettings: TfrmSettings
     Align = alClient
     Caption = 'Servi'#231'o API'
     TabOrder = 3
-    ExplicitTop = 99
-    ExplicitWidth = 502
-    ExplicitHeight = 200
     object Label3: TLabel
       Left = 16
       Top = 32
@@ -274,7 +299,7 @@ object frmSettings: TfrmSettings
       Top = 96
       Width = 121
       Height = 17
-      Caption = 'Iniciar Servi'#231'o Auto'
+      Caption = ' '
       TabOrder = 0
     end
     object btnAPI: TButton
@@ -291,6 +316,8 @@ object frmSettings: TfrmSettings
       Width = 121
       Height = 23
       BorderStyle = bsNone
+      MaxLength = 5
+      NumbersOnly = True
       TabOrder = 2
       Text = '8082'
     end

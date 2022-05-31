@@ -1,0 +1,85 @@
+unit uItemStock.View.Settings;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Imaging.pngimage, uItemStock.Controller.Interfaces,
+  uItemStock.Controller.Settings;
+
+
+type
+  TfrmSettings = class(TForm)
+    pnlTop: TPanel;
+    pnlBottom: TPanel;
+    Image1: TImage;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    ckAPIAuto: TCheckBox;
+    ckStartOnSys: TCheckBox;
+    ckStartMin: TCheckBox;
+    btnAPI: TButton;
+    edtPort: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    lblIPAddress: TLabel;
+    Button2: TButton;
+    Button3: TButton;
+    Image2: TImage;
+    procedure Image1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    FCONT_Settings : IControllSettings;
+    procedure LoadSettings;
+    procedure SaveSettings;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmSettings: TfrmSettings;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmSettings.FormCreate(Sender: TObject);
+begin
+ FCONT_Settings := TControllSettings.Create;
+end;
+
+procedure TfrmSettings.FormShow(Sender: TObject);
+begin
+ LoadSettings;
+end;
+
+procedure TfrmSettings.Image1Click(Sender: TObject);
+begin
+Self.Close;
+end;
+
+procedure TfrmSettings.LoadSettings;
+begin
+ with FCONT_Settings do begin
+   ckAPIAuto.Checked := GetAutoStartAPI;
+   ckStartOnSys.Checked := GetStartOnSys;
+   ckStartMin.Checked := GetStartMinimized;
+   edtPort.Text := GetPortAPI;
+ end;
+end;
+
+procedure TfrmSettings.SaveSettings;
+begin
+ with FCONT_Settings do begin
+   SetPortAPI(edtPort.Text);
+   SetStarOnSys(ckStartOnSys.Checked);
+   SetStartMinimized(ckStartMin.Checked);
+   SetAutoStartAPI(ckAPIAuto.Checked);
+ end;
+end;
+
+end.

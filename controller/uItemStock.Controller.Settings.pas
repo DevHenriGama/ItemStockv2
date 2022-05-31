@@ -1,20 +1,24 @@
 unit uItemStock.Controller.Settings;
 
 interface
-   uses uItemStock.Controller.Interfaces, uItemStock.View.Settings;
+   uses uItemStock.Controller.Interfaces;
 
   type
   TControllSettings = class(TInterfacedObject,IControllSettings)
-    private
-       FStartOnSys : Boolean;
-       FStartMinimized : Boolean;
-       FPort : String;
-       FStartAPI : Boolean;
-       FViewSettings : TfrmSettings;
-    public
-    constructor Create(ViewForm : TfrmSettings);
-    destructor Destroy;override;
 
+    private
+
+    public
+      constructor Create;
+      destructor Destroy;override;
+      procedure SetPortAPI(Value : String);
+      function GetPortAPI : String;
+      procedure SetStarOnSys(Value : Boolean);
+      function GetStartOnSys : Boolean;
+      procedure SetStartMinimized(Value : Boolean);
+      function GetStartMinimized : Boolean;
+      procedure SetAutoStartAPI(Value : Boolean);
+      function GetAutoStartAPI : Boolean;
   end;
 
 implementation
@@ -29,9 +33,8 @@ implementation
 
 { TControllSettings }
 
-constructor TControllSettings.Create(ViewForm: TfrmSettings);
+constructor TControllSettings.Create;
 begin
- FViewSettings := ViewForm;
  FModelSettings := TModelSettings.Create;
 end;
 
@@ -39,6 +42,46 @@ destructor TControllSettings.Destroy;
 begin
 
   inherited;
+end;
+
+function TControllSettings.GetAutoStartAPI: Boolean;
+begin
+ Result := FModelSettings.StartAutoAPI;
+end;
+
+function TControllSettings.GetPortAPI: String;
+begin
+ Result := FModelSettings.PortAPI;
+end;
+
+function TControllSettings.GetStartMinimized: Boolean;
+begin
+ Result := FModelSettings.StartMinimized;
+end;
+
+function TControllSettings.GetStartOnSys: Boolean;
+begin
+Result := FModelSettings.StartOnSys;
+end;
+
+procedure TControllSettings.SetAutoStartAPI(Value: Boolean);
+begin
+FModelSettings.StartAutoAPI(Value);
+end;
+
+procedure TControllSettings.SetPortAPI(Value: String);
+begin
+FModelSettings.PortAPI(Value);
+end;
+
+procedure TControllSettings.SetStarOnSys(Value: Boolean);
+begin
+FModelSettings.StartOnSys(Value);
+end;
+
+procedure TControllSettings.SetStartMinimized(Value: Boolean);
+begin
+FModelSettings.StartMinimize(Value);
 end;
 
 { TControllSettings }

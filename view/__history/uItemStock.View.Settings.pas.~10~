@@ -1,0 +1,143 @@
+unit uItemStock.View.Settings;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Imaging.pngimage, uItemStock.Controller.Interfaces,
+  uItemStock.Controller.Settings, uItemStock.view.Main;
+
+
+type
+
+  InfoInstance = record
+    Port : String;
+    StartAuto : Boolean;
+  end;
+
+  TfrmSettings = class(TForm)
+    pnlTop: TPanel;
+    pnlBottom: TPanel;
+    Image1: TImage;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    ckAPIAuto: TCheckBox;
+    ckStartOnSys: TCheckBox;
+    ckStartMin: TCheckBox;
+    btnAPI: TButton;
+    edtPort: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    lblIPAddress: TLabel;
+    Image2: TImage;
+    Image3: TImage;
+    procedure Image1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Image3Click(Sender: TObject);
+  private
+    { Private declarations }
+    FCONT_Settings : IControllSettings;
+    OldSettings : InfoInstance;
+    FMainForm : TfrmMain;
+    procedure LoadSettings;
+    procedure SaveSettings;
+    function  WasModify : Boolean;
+    procedure FieldModify(State : Boolean);
+  public
+    { Public declarations }
+    constructor Create(MainForm : TfrmMain);
+  end;
+
+var
+  frmSettings: TfrmSettings;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmSettings.Button3Click(Sender: TObject);
+begin
+SaveSettings;
+end;
+
+constructor TfrmSettings.Create(MainForm: TfrmMain);
+begin
+ FMainForm := MainForm;
+end;
+
+procedure TfrmSettings.FieldModify(State: Boolean);
+begin
+
+end;
+
+procedure TfrmSettings.FormCreate(Sender: TObject);
+begin
+ FCONT_Settings := TControllSettings.Create;
+end;
+
+procedure TfrmSettings.FormShow(Sender: TObject);
+begin
+ LoadSettings;
+end;
+
+procedure TfrmSettings.Image1Click(Sender: TObject);
+begin
+Self.Close;
+end;
+
+procedure TfrmSettings.Image3Click(Sender: TObject);
+begin
+ if (WasModify) and (FMainForm.ServicePooler.Active) then
+  Application.MessageBox('Desligue o Serviço de API para Altera-lo',
+  'ItemStock',MB_OK+MB_ICONEXCLAMATION)
+ else
+  SaveSettings;
+
+end;
+
+procedure TfrmSettings.LoadSettings;
+begin
+ with FCONT_Settings do begin
+   ckAPIAuto.Checked := GetAutoStartAPI;
+   ckStartOnSys.Checked := GetStartOnSys;
+   ckStartMin.Checked := GetStartMinimized;
+   edtPort.Text := GetPortAPI;
+
+   with OldSettings do begin
+     Port := GetPortAPI;
+     StartAuto := GetAutoStartAPI;
+   end;
+ end;
+end;
+
+procedure TfrmSettings.SaveSettings;
+begin
+ try
+    with FCONT_Settings do begin
+   SetPortAPI(edtPort.Text);
+   SetStarOnSys(ckStartOnSys.Checked);
+   SetStartMinimized(ckStartMin.Checked);
+   SetAutoStartAPI(ckAPIAuto.Checked);
+ end;
+  Application.MessageBox('Configurações Salvas com Sucesso',
+  'ItemStock',MB_OK+MB_ICONASTERISK);
+ except
+
+ end;
+end;
+
+function TfrmSettings.WasModify: Boolean;
+begin
+ with OldSettings do begin
+   if (Port <> edtPort.Text) and (StartAuto <> ckAPIAuto.Checked) then
+    Result := True
+   else
+    Result := False;
+ end;
+end;
+
+end.

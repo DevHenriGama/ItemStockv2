@@ -49,7 +49,7 @@ end;
 procedure TModelSettings.PortAPI(_ValuePort: String);
 begin
    try
-    FSettingsFile.ReadString('API','Port',_ValuePort);
+    FSettingsFile.WriteString('API','Port',_ValuePort);
    except
     raise Exception.Create('Erro ao alterar porta da API');
    end;
@@ -58,7 +58,7 @@ end;
 procedure TModelSettings.ProcessFileSettings;
 var SettingsFile : String;
 begin
-  SettingsFile := ExtractfilePath(Application.ExeName + '/Settings.ini');
+  SettingsFile := ExtractfilePath(Application.ExeName ) + 'Settings.ini';
   FSettingsFile := TIniFile.Create(SettingsFile);
 
 
