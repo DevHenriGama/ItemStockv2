@@ -116,12 +116,6 @@ procedure TControllerItem.Remove;
 begin
  with FStockItem do begin
    ID := FID;
-   Item := FItem;
-   Description := FDescription;
-   PicturePath := FPicturePath;
-   State := FState;
-   Container := FContainer;
-   TypeItem := FTypeItem;
    Delete;
  end;
 

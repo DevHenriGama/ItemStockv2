@@ -1,7 +1,7 @@
 unit uItemStock.Controller.Interfaces;
 interface
 uses
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, System.JSON;
   type
     IControllerItem = Interface;
     IControllerStock = interface

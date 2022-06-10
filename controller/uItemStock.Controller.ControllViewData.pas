@@ -4,7 +4,7 @@ interface
 
 uses
   FireDAC.Comp.Client, uItemStock.Dao.DataModule, uItemStock.Dao.Instruction,
-  uItemStock.Controller.Interfaces, uItemStock.Utils.SysUtils;
+  uItemStock.Controller.Interfaces, uItemStock.Utils.SysUtils, System.JSON;
   type
     TControllViewData = class(TInterfacedObject,IViewData)
 

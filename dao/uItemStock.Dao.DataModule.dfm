@@ -10,6 +10,7 @@ object dmDados: TdmDados
       'DriverID=SQLite')
     Connected = True
     LoginPrompt = False
+    BeforeConnect = ConnectionBeforeConnect
     Left = 176
     Top = 160
   end

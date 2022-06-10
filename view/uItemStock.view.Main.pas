@@ -37,12 +37,14 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     Clock : TTimer;
     procedure ShowDateAndTime(Sender : TObject);
     procedure ButtonFx(out Button : TPanel);
     procedure SetIndicator(out Button : TPanel);
+    procedure LoadSettings;
   public
     { Public declarations }
   end;
@@ -51,11 +53,17 @@ var
 implementation
 {$R *.dfm}
 
-uses uItemStock.Controll.APISource, uItemStock.View.Settings;
+uses uItemStock.Controll.APISource, uItemStock.View.Settings,
+  uItemStock.Controller.Interfaces, uItemStock.Controller.Settings;
 procedure TfrmMain.btnCloseClick(Sender: TObject);
 begin
 Self.Close;
 end;
+procedure TfrmMain.Button1Click(Sender: TObject);
+begin
+ServicePooler.Active := True;
+end;
+
 procedure TfrmMain.ButtonFx(out Button: TPanel);
 begin
   with Button do begin
@@ -79,6 +87,7 @@ procedure TfrmMain.FormShow(Sender: TObject);
 begin
 SetIndicator(pnlStock);
 Clock.OnTimer := ShowDateAndTime;
+LoadSettings;
 end;
 procedure TfrmMain.Image2Click(Sender: TObject);
 begin
@@ -91,13 +100,21 @@ begin
  ReleaseCapture;
  Perform(WM_SYSCOMMAND,SG,0);
 end;
+procedure TfrmMain.LoadSettings;
+var ICtrlSet : IControllSettings;
+begin
+ ICtrlSet := TControllSettings.Create;
+ ServicePooler.ServicePort := StrToInt(ICtrlSet.GetPortAPI);
+ ServicePooler.Active := ICtrlSet.GetAutoStartAPI;
+end;
+
 procedure TfrmMain.pnlSettingsClick(Sender: TObject);
 var SettingView : TfrmSettings;
 begin
 SetIndicator(pnlSettings);
  try
-  SettingView := frmSettings.Create(Self);
-  SettingView.Show;
+  SettingView := TfrmSettings.Create(nil);
+  SettingView.OpenForm(ServicePooler);
  finally
   SettingView.Free;
  end;

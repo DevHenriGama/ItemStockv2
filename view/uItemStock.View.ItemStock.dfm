@@ -15,7 +15,6 @@ object frmItemStock: TfrmItemStock
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
@@ -31,9 +30,9 @@ object frmItemStock: TfrmItemStock
     TabOrder = 2
   end
   object dbData: TDBGrid
-    Left = 0
+    Left = 200
     Top = 31
-    Width = 1027
+    Width = 827
     Height = 560
     Align = alClient
     DataSource = DataPersistent
@@ -224,9 +223,8 @@ object frmItemStock: TfrmItemStock
   object spMenu: TSplitView
     Left = 0
     Top = 31
-    Width = 0
+    Width = 200
     Height = 560
-    Opened = False
     OpenedWidth = 200
     Placement = svpLeft
     TabOrder = 3

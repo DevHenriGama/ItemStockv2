@@ -3,7 +3,7 @@ unit uItemStock.Dao.Interfaces;
 interface
 
 uses
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, System.JSON;
 
 
   type
@@ -13,6 +13,7 @@ uses
      procedure UpdateItem;
      procedure DeleteItem;
      procedure  SerchInDatabase(_Value , SB_By : String);
+     function SearchBY(_Value , Column : String) : TJSONObject;
      function PersitentData : TFDQuery;
      procedure ListAll;
   end;

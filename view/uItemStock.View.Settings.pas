@@ -6,15 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage, uItemStock.Controller.Interfaces,
-  uItemStock.Controller.Settings, uItemStock.view.Main;
+  uItemStock.Controller.Settings, uItemStock.view.Main, uRESTDWBase,
+  IdBaseComponent, IdComponent, IdIPWatch;
 
 
 type
-
-  InfoInstance = record
-    Port : String;
-    StartAuto : Boolean;
-  end;
 
   TfrmSettings = class(TForm)
     pnlTop: TPanel;
@@ -33,40 +29,61 @@ type
     lblIPAddress: TLabel;
     Image2: TImage;
     Image3: TImage;
+    IDConnWatch: TIdIPWatch;
     procedure Image1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Image3Click(Sender: TObject);
+    procedure btnAPIClick(Sender: TObject);
+    procedure lblIPAddressClick(Sender: TObject);
   private
     { Private declarations }
     FCONT_Settings : IControllSettings;
-    OldSettings : InfoInstance;
     FMainForm : TfrmMain;
+    FMainPooler : TRestsERVICEPooler;
     procedure LoadSettings;
     procedure SaveSettings;
-    function  WasModify : Boolean;
     procedure FieldModify(State : Boolean);
+    procedure SetPoolerInfo;
+    function GetLocalIP : String;
   public
     { Public declarations }
-    constructor Create(MainForm : TfrmMain);overload;
+    procedure OpenForm(Pooler : TRESTServicePooler);
   end;
 
 var
   frmSettings: TfrmSettings;
 
 implementation
+uses ShellAPI;
 
 {$R *.dfm}
+
+procedure TfrmSettings.btnAPIClick(Sender: TObject);
+begin
+  FMainPooler.Active := not FMainPooler.Active;
+  SetPoolerInfo;
+end;
 
 procedure TfrmSettings.Button3Click(Sender: TObject);
 begin
 SaveSettings;
 end;
 
-constructor TfrmSettings.Create(MainForm: TfrmMain);
+
+procedure TfrmSettings.SetPoolerInfo;
 begin
- FMainForm := MainForm;
+ if FMainPooler.Active then begin
+   btnAPI.Caption := 'Desativar';
+   lblIPAddress.Caption :=  GetLocalIP +
+    IntToStr(FMainPooler.ServicePort) + '/status';
+ end
+ else
+ begin
+    lblIPAddress.Caption := '0.0.0.0';
+   btnAPI.Caption := 'Ativar';
+ end;
 end;
 
 procedure TfrmSettings.FieldModify(State: Boolean);
@@ -82,6 +99,12 @@ end;
 procedure TfrmSettings.FormShow(Sender: TObject);
 begin
  LoadSettings;
+ SetPoolerInfo;
+end;
+
+function TfrmSettings.GetLocalIP: String;
+begin
+Result := IDConnWatch.LocalIP;
 end;
 
 procedure TfrmSettings.Image1Click(Sender: TObject);
@@ -91,12 +114,22 @@ end;
 
 procedure TfrmSettings.Image3Click(Sender: TObject);
 begin
- if (WasModify) and (FMainForm.ServicePooler.Active) then
-  Application.MessageBox('Desligue o Serviço de API para Altera-lo',
-  'ItemStock',MB_OK+MB_ICONEXCLAMATION)
- else
-  SaveSettings;
+  if FMainPooler.Active then begin
+          Application.MessageBox('Desligue o Serviço de API para Altera-lo',
+  'ItemStock',MB_OK+MB_ICONEXCLAMATION);
+  end
+  else
+  begin
+   SaveSettings;
+  end;
+end;
 
+procedure TfrmSettings.lblIPAddressClick(Sender: TObject);
+var formalIP : String;
+begin
+  formalIP := 'http://'+GetLocalIP+':'+IntToStr(FMainPooler.ServicePort)+'/status';
+ ShellExecute(handle,'open',
+  pchar(formalIP),0,0,0);
 end;
 
 procedure TfrmSettings.LoadSettings;
@@ -106,12 +139,13 @@ begin
    ckStartOnSys.Checked := GetStartOnSys;
    ckStartMin.Checked := GetStartMinimized;
    edtPort.Text := GetPortAPI;
-
-   with OldSettings do begin
-     Port := GetPortAPI;
-     StartAuto := GetAutoStartAPI;
-   end;
  end;
+end;
+
+procedure TfrmSettings.OpenForm(Pooler: TRESTServicePooler);
+begin
+  FMainPooler := Pooler;
+  Self.ShowModal;
 end;
 
 procedure TfrmSettings.SaveSettings;
@@ -130,14 +164,5 @@ begin
  end;
 end;
 
-function TfrmSettings.WasModify: Boolean;
-begin
- with OldSettings do begin
-   if (Port <> edtPort.Text) and (StartAuto <> ckAPIAuto.Checked) then
-    Result := True
-   else
-    Result := False;
- end;
-end;
 
 end.

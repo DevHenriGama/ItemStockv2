@@ -4,7 +4,7 @@ interface
 
 uses
   uItemStock.Model.ClassItem, uItemStock.Dao.Interfaces,FireDAC.Comp.Client,
-  uItemStock.Dao.DataModule;
+  uItemStock.Dao.DataModule, System.JSON;
 
 type
    TDaoIntructions = class(TInterfacedObject,IDaoInstruction)
@@ -23,6 +23,7 @@ type
      procedure UpdateItem;
      procedure DeleteItem;
      procedure  SerchInDatabase(_Value , SB_By : String);
+     function SearchBY(_Value , Column : String) : TJSONObject;
      procedure ListAll;
      function PersitentData : TFDQuery;
    end;
@@ -119,6 +120,29 @@ begin
   end;
  end;
  Result := FQuery;
+end;
+
+function TDaoIntructions.SearchBY(_Value, Column: String): TJSONObject;
+var jObject,JObj : TJSONObject;
+  I: Integer;
+begin
+jObject := TJSONObject.Create;
+ with FQuery do begin
+   Close;
+   SQL.Clear;
+   SQL.Add('SELECT '+Column+' FROM ITENS WHERE ' +Column
+    +' LIKE '+QuotedStr('%'+_Value+'%'));
+    ExecSQL;
+    if RecordCount > 0 then begin
+       jObj := TJSONObject.Create;
+      for I := 0 to RecordCount-1 do begin
+
+      end;
+      jObj.Free;
+    end;
+ end;
+
+jObject.Free;
 end;
 
 procedure TDaoIntructions.SerchInDatabase(_Value, SB_By: String);

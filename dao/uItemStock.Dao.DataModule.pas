@@ -16,6 +16,7 @@ type
     Connection: TFDConnection;
     queryDataPersistent: TFDQuery;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    procedure ConnectionBeforeConnect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -27,9 +28,18 @@ var
 
 implementation
 
+uses
+  Vcl.Forms;
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
 {$R *.dfm}
 
 { TdmDados }
+procedure TdmDados.ConnectionBeforeConnect(Sender: TObject);
+var Path : String;
+begin
+ Path := ExtractFilePath(Application.ExeName) + 'database\database.db';
+ Connection.Params.Database := Path;
+end;
+
 end.

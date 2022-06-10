@@ -19,13 +19,13 @@ object frmSettings: TfrmSettings
     Left = 0
     Top = 0
     Width = 490
-    Height = 24
+    Height = 30
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Configura'#231#245'es'
     Color = 6316128
-    Constraints.MaxHeight = 24
-    Constraints.MinHeight = 24
+    Constraints.MaxHeight = 30
+    Constraints.MinHeight = 30
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -12
@@ -39,27 +39,24 @@ object frmSettings: TfrmSettings
       Left = 463
       Top = 3
       Width = 24
-      Height = 18
+      Height = 24
       Align = alRight
       AutoSize = True
-      Center = True
       Picture.Data = {
         0954506E67496D61676589504E470D0A1A0A0000000D49484452000000180000
         00180806000000E0773DF80000000473424954080808087C0864880000000970
-        485973000000B1000000B101C62D498D0000001974455874536F667477617265
-        007777772E696E6B73636170652E6F72679BEE3C1A000000F54944415478DA9D
-        95BB0EC2300C45E3999D2F05065E03AF81F2BB488889388A8B098E63FB4A5652
-        B53DA74D9A14D26FCEB9DEB58D649D6B59DB1268E0FBDA3F062408BDD7FE8324
-        24E0708A47C2E19422810EDC2391E0B30405AB5C9302D0241A1C73A0218A4886
-        F05C173EC91E89098E1D684E6C735D951B77B51D5D73A303102E18BD8996F9C9
-        354154F207D7045E89081F09AC922EDC22187D2D1875316A020B7C28E9093C70
-        55220922F0AEA4155856E82B39B6152E302FFFE4D85648E081534C1208C2CD12
-        149C2AC40BB748261A224962816B123CDEF049E6120F5C92143876DACF14F7F9
-        6762FBB933F83F59A4EF7F237D00AB394B270DC92E070000000049454E44AE42
-        6082}
+        485973000000BA000000BA014F1E60850000001974455874536F667477617265
+        007777772E696E6B73636170652E6F72679BEE3C1A000000FE4944415478DA63
+        64800077209E0EC4BC405C03C43319C803E940DC0CC49F80380B887731420DDF
+        04C46C480ACB80B89B44C34B81B80B89FF0B887D4116DC0362452C1A48B104DD
+        7018B80BB2E015108BE2D0488C25B80C0781978CD0709B81C7007C96E0331C04
+        D219A18C2220EEC5A3B01A88DBD0C488D2C348AA0652D532A24910A3F10729BE
+        65C4A28050B8E20318F1C5884321219F107439210B48B504ABE1842C20D6129C
+        8653CB0250D9D54A8E05A404114E4BA819C9582DA17B32A56946A3695141D3C2
+        8E96C575065D2A9C3B40AC4CA6E1842CB903B2C00D883733D0B0D267805A328D
+        01D26CA905E259241A0E03A0F86C6280345BB2817817001F5750F973C6FA0600
+        00000049454E44AE426082}
       OnClick = Image1Click
-      ExplicitLeft = 613
-      ExplicitHeight = 24
     end
   end
   object pnlBottom: TPanel
@@ -77,7 +74,7 @@ object frmSettings: TfrmSettings
   end
   object GroupBox1: TGroupBox
     Left = 0
-    Top = 24
+    Top = 30
     Width = 490
     Height = 65
     Align = alTop
@@ -127,9 +124,6 @@ object frmSettings: TfrmSettings
       Align = alLeft
       Caption = 'Iniciar com o Sistema'
       TabOrder = 0
-      ExplicitLeft = 16
-      ExplicitTop = 24
-      ExplicitHeight = 17
     end
     object ckStartMin: TCheckBox
       AlignWithMargins = True
@@ -140,19 +134,18 @@ object frmSettings: TfrmSettings
       Align = alLeft
       Caption = 'Iniciar Minimizado'
       TabOrder = 1
-      ExplicitLeft = 170
-      ExplicitTop = 24
-      ExplicitHeight = 17
     end
   end
   object GroupBox2: TGroupBox
     Left = 0
-    Top = 89
+    Top = 95
     Width = 490
-    Height = 144
+    Height = 138
     Align = alClient
     Caption = 'Servi'#231'o API'
     TabOrder = 3
+    ExplicitTop = 89
+    ExplicitHeight = 144
     object Label3: TLabel
       Left = 16
       Top = 32
@@ -179,13 +172,14 @@ object frmSettings: TfrmSettings
       Width = 33
       Height = 15
       Caption = '0.0.0.0'
+      OnClick = lblIPAddressClick
     end
     object Image2: TImage
       AlignWithMargins = True
       Left = 357
       Top = 20
       Width = 128
-      Height = 119
+      Height = 113
       Align = alRight
       AutoSize = True
       Center = True
@@ -299,7 +293,7 @@ object frmSettings: TfrmSettings
       Top = 96
       Width = 121
       Height = 17
-      Caption = ' '
+      Caption = 'Iniciar Automatico'
       TabOrder = 0
     end
     object btnAPI: TButton
@@ -309,6 +303,7 @@ object frmSettings: TfrmSettings
       Height = 25
       Caption = 'Iniciar'
       TabOrder = 1
+      OnClick = btnAPIClick
     end
     object edtPort: TEdit
       Left = 16
@@ -321,5 +316,11 @@ object frmSettings: TfrmSettings
       TabOrder = 2
       Text = '8082'
     end
+  end
+  object IDConnWatch: TIdIPWatch
+    Active = False
+    HistoryFilename = 'iphist.dat'
+    Left = 336
+    Top = 41
   end
 end
