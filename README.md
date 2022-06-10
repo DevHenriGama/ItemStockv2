@@ -1,5 +1,5 @@
 # ItemStockv2
-Sistema de controle de estoque -- Atualmente em expansão.
+Sistema de controle de estoque , Útil para Organização de cabos , peças de hardware .
 
 ## Sobre
  Projeto simple de controle de Estoque. Desenvolvi para Solucionar uma organização de Cabos , peças de computadores e alguns dispositivos.
